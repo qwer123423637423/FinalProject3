@@ -5,23 +5,32 @@
 using namespace std;
 
 
-User::User(string name, string password)
+Server::Server() 
 {
-	UserName = name;
-	UserPassword = password;
+	
 }
-void User::Info() const
+void Server::GetUserInfo(string name)
 {
-	cout << "Ваш ник " << UserName << endl;
-	cout << "Ваш пароль " << UserPassword << endl;
+	string line;
+	int size_name;
+	int size_password;
+	ifstream in("users.txt");
+	if (in.is_open())
+	{
+		while (getline(in, line))
+		{
+			if (line.find(name) != string::npos)
+			{
+				size_name = line.find(" ");
+				size_password = line.length() - size_name;
+				cout << "Имя аккаунта " + line.substr(0, size_name) << endl;
+				cout << "Пароль от аккаунта " + line.substr(size_name + 1, size_password) << endl;
+			}
+		}
+		in.close();
+	}
 }
-
-User::~User()
-{
-}
-
-//???????? ???????? ?????????
-void User::ShowMesages()
+void Server::GetMessagesForUser(string name) 
 {
 	string line;
 
@@ -31,7 +40,7 @@ void User::ShowMesages()
 		while (getline(in, line))
 		{
 			int counter = 0;
-			if (line.find("To " + UserName) != string::npos)
+			if (line.find("To " + name) != string::npos)
 			{
 				counter += 1;
 				int size_of_text = line.length() - line.find("*");
@@ -45,19 +54,25 @@ void User::ShowMesages()
 	}
 	in.close();
 }
-//????????? ?????????
-void User::SendMesage(string name, string text)
+void Server::WriteMessage(string from, string to, string text)
 {
 	ofstream out;
 	out.open("mesages.txt", ios::app);
 	if (out.is_open())
 	{
-		out << "To " + name + " " + "*" + text + " " + "From " + UserName;
+		out << "To " + to + " " + "*" + text + " " + "From " + from;
 	}
 	out.close();
 }
-// ?????????? ????????? ???????? ????
-void User::SeeGeneral()
+void Server::RegisterUser(string name, string password)
+{
+
+}
+void Server::Login(string name, string password)
+{
+
+}
+void Server::GetGeneral() 
 {
 	string line;
 	ifstream in("general_chat.txt");
@@ -71,14 +86,23 @@ void User::SeeGeneral()
 	}
 	in.close();
 }
-//????????? ????????? ? ??????? ???
-void User::SendGeneral(string text)
+void Server::SendGeneral(string from, string text) 
 {
 	ofstream out;
 	out.open("general_chat.txt", ios::app);
 	if (out.is_open())
 	{
-		out << UserName + " " + "написал: " + text << endl;
+		out << from + " " + "написал: " + text << endl;
 	}
 	out.close();
 }
+
+User::User(string name, string password)
+{
+	UserName = name;
+	UserPassword = password;
+}
+User::~User()
+{
+}
+

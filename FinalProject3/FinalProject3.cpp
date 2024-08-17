@@ -9,6 +9,8 @@ using namespace std;
 int main()
 {
     setlocale(LC_ALL, "");
+    Server* serverr = new Server();
+    Server& server = *serverr;
     string _log;
     string _pas;
     string username;
@@ -145,12 +147,11 @@ int main()
                 cin.seekg(cin.eof());
                 _flushall();
                 getline(cin, text);
-                user.SendMesage(name, text);
+                server.WriteMessage(username, name, text);
             }
             else if (answer == 2)
             {
-                user.Info();
-                printf("\n");
+                server.GetUserInfo(username);
             }
             else if (answer == 3)
             {
@@ -159,11 +160,11 @@ int main()
             }
             else if (answer == 4)
             {
-                user.ShowMesages();
+                server.GetMessagesForUser(username);
             }
             else if (answer == 5)
             {
-                user.SeeGeneral();
+                server.GetGeneral();
             }
             else if (answer == 6)
             {
@@ -171,7 +172,7 @@ int main()
                 cin.seekg(cin.eof());
                 _flushall();
                 getline(cin, text);
-                user.SendGeneral(text);
+                server.SendGeneral(username, text);
             }
             else
             {
