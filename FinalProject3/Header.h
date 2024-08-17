@@ -20,8 +20,6 @@ public:
 	void GetUserInfo(string name);
 	void GetMessagesForUser(string name);
 	void WriteMessage(string from, string to, string text);
-	void RegisterUser(string name, string password);
-	void Login(string name, string password);
 	void GetGeneral();
 	void SendGeneral(string from, string text);
 };

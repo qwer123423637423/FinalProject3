@@ -60,17 +60,9 @@ void Server::WriteMessage(string from, string to, string text)
 	out.open("mesages.txt", ios::app);
 	if (out.is_open())
 	{
-		out << "To " + to + " " + "*" + text + " " + "From " + from;
+		out << "To " + to + " " + "*" + text + " " + "From " + from + "\n";
 	}
 	out.close();
-}
-void Server::RegisterUser(string name, string password)
-{
-
-}
-void Server::Login(string name, string password)
-{
-
 }
 void Server::GetGeneral() 
 {
